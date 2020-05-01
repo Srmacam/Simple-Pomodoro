@@ -4,25 +4,35 @@
     <meta charset="utf-8">
     <title>Index</title>
     <style>
+        /* Zero out margins and padding for precise control */
         * { margin: 0; padding: 0 }
+        
         html {
           min-height: 100%;
         }
         body {
             display: flex;
-            align-content: center;
-            justify-content: center;
+            -align-content: center;
+            justify-content: center; 
         }
         main {
-            margin-top: 25%;
-            width: 360px;
-            height: 480px;
+            margin-top: 25vh; 
+            width: 40vw; 
+            height: 50vh; 
+            
+            /* Set minimum and maximum sizes of the main content */
+            min-width: 360px;
+            max-width: 520px;
+            min-height: 480px;
+            max-height: 694px;
             
             background: pink;
         }
+        
+        /* Class selectors */
         .frame {
             -visibility: collapse;
-            display: none;
+            display: none; 
             
             align-content: stretch;
             justify-content: center;
@@ -40,18 +50,23 @@
   
   <body>
     <main>
+        <!-- The start menu frame --> 
         <div id="StartFrame" class="frame" style="display: block">
             <p>Hello Pomodoro</p>
             <button id="StartButton">
                 Start App
             </button>
         </div>
+        
+        <!-- The placeholder for the settings menu frame -->
         <div id="SettingsFrame" class="frame">
             <p>Settings Frame</p>
             <button id="BeginButton">
                 Begin Timer
             </button>
         </div>
+        
+        <!-- Another placeholder for the timer frame -->
         <div id="TimerFrame" class="frame">
             <p>Timer Frame</p>
             <button id="StopButton">
@@ -62,28 +77,29 @@
   </body>
   
   <script>
+      // Callback function to start the app
       StartButton.addEventListener('click', (e) => {
-          let prevFrame = document.getElementById("StartFrame");
-          prevFrame.style.display = "none";
-          
-          let nextFrame = document.getElementById("SettingsFrame");
-          nextFrame.style.display = "block";
+          TransitionFrame("StartFrame", "SettingsFrame");
       });
       
+      // Callback function to start the timer
       BeginButton.addEventListener('click', (e) => {
-          let prevFrame = document.getElementById("SettingsFrame");
-          prevFrame.style.display = "none";
-          
-          let nextFrame = document.getElementById("TimerFrame");
-          nextFrame.style.display = "block";
+          TransitionFrame("SettingsFrame", "TimerFrame");
       });
       
+      // Callback function to stop the timer
       StopButton.addEventListener('click', (e) => {
-          let prevFrame = document.getElementById("TimerFrame");
+          TransitionFrame("TimerFrame", "StartFrame");
+      });
+      
+      // Helper function to transition between states
+      function TransitionFrame(frame1, frame2)
+      {
+          let prevFrame = document.getElementById(frame1);
           prevFrame.style.display = "none";
           
-          let nextFrame = document.getElementById("StartFrame");
+          let nextFrame = document.getElementById(frame2);
           nextFrame.style.display = "block";
-      });
+      }
   </script>
 </html>
