@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>Index</title>
+    <style>
+        * { margin: 0; padding: 0 }
+        html {
+          min-height: 100%;
+        }
+        body {
+            display: flex;
+            align-content: center;
+            justify-content: center;
+        }
+        main {
+            margin-top: 25%;
+            width: 360px;
+            height: 480px;
+            
+            background: pink;
+        }
+        .frame {
+            -visibility: collapse;
+            display: none;
+            
+            align-content: stretch;
+            justify-content: center;
+        }
+        .frame > p {
+            margin-top: 30%;
+            text-align: center;
+        }
+        .frame > * {
+            margin-left: 30%;
+            width: 40%;
+        }
+    </style>
+  </head>
+  
+  <body>
+    <main>
+        <div id="StartFrame" class="frame" style="display: block">
+            <p>Hello Pomodoro</p>
+            <button id="StartButton">
+                Start App
+            </button>
+        </div>
+        <div id="SettingsFrame" class="frame">
+            <p>Settings Frame</p>
+            <button id="BeginButton">
+                Begin Timer
+            </button>
+        </div>
+        <div id="TimerFrame" class="frame">
+            <p>Timer Frame</p>
+            <button id="StopButton">
+                Stop Timer
+            </button>
+        </div>
+    </main>
+  </body>
+  
+  <script>
+      StartButton.addEventListener('click', (e) => {
+          let prevFrame = document.getElementById("StartFrame");
+          prevFrame.style.display = "none";
+          
+          let nextFrame = document.getElementById("SettingsFrame");
+          nextFrame.style.display = "block";
+      });
+      
+      BeginButton.addEventListener('click', (e) => {
+          let prevFrame = document.getElementById("SettingsFrame");
+          prevFrame.style.display = "none";
+          
+          let nextFrame = document.getElementById("TimerFrame");
+          nextFrame.style.display = "block";
+      });
+      
+      StopButton.addEventListener('click', (e) => {
+          let prevFrame = document.getElementById("TimerFrame");
+          prevFrame.style.display = "none";
+          
+          let nextFrame = document.getElementById("StartFrame");
+          nextFrame.style.display = "block";
+      });
+  </script>
+</html>
