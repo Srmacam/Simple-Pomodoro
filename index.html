@@ -22,14 +22,14 @@
             <!-- Feel free to edit the settings form however you want, didn't really style it-->
             <!-- Submitting the form reloads the page, so no submit button was added -->
             <form id="SettingsForm" method="post" onsubmit="return false;">
-                <label for="workTime">Work</label><br>
-                <input type="number" id="workTime" name="workTime" min="0" value="25">
+                <label for="WorkTime">Work</label><br>
+                <input type="number" id="WorkTime" name="WorkTime" min="1" value="25">
                 <br><br>
-                <label for="breakTime">Break</label>
-                <input type="number" id="breakTime" name="breakTime" min="0" value="5">
+                <label for="BreakTime">Break</label>
+                <input type="number" id="BreakTime" name="BreakTime" min="1" value="5">
                 <br><br>
-                <label for="numSessions">Sessions</label>
-                <input type="number" id="numSessions" name="numSessions" min="0" value="4">
+                <label for="NumSessions">Sessions</label>
+                <input type="number" id="NumSessions" name="NumSessions" min="1" value="4">
             </form>
             <br><br>
             <button id="BeginButton" class="button button-start">
@@ -38,7 +38,7 @@
         </div>
 
         <div id="TimerFrame" class="frame">
-            <p>Timer Frame</p>
+            <p id="Timer" class="timer">Timer Frame</p>
             <br>
             <button id="StopButton" class="button button-stop">
                 Stop Timer
@@ -57,19 +57,27 @@
       });
       
       BeginButton.addEventListener('click', (e) => {
-          let workTime = document.getElementById("workTime").value;
-          let breakTime = document.getElementById("breakTime").value;
-          let numSessions = document.getElementById("numSessions").value;
+          let workTime = document.getElementById("WorkTime").value;
+          let breakTime = document.getElementById("BreakTime").value;
+          let numSessions = document.getElementById("NumSessions").value;
+
+          // Validate form input
           if (isNaN(workTime) || isNaN(breakTime) || isNaN(numSessions) || 
               workTime < 1 || breakTime < 1 || numSessions < 1) {
               alert("Please use only positive integers.");
           }
+
           else {
             let prevFrame = document.getElementById("SettingsFrame");
             prevFrame.style.display = "none";
             
+            // Dummy timer module, uses the input from earlier
+            let seconds = "00";
+            document.getElementById("Timer").innerHTML = workTime + ":" + seconds;
+
             let nextFrame = document.getElementById("TimerFrame");
             nextFrame.style.display = "block";
+            
           }
       });
       
