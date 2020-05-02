@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Index</title>
     <!-- Moved the css to a different file for organizational purposes -->
     <link rel="stylesheet" type="text/css" href="./index.css">
-  </head>
-  
-  <body>
+</head>
+
+<body>
     <main>
         <!-- The start menu frame --> 
         <div id="StartFrame" class="frame" style="display: block">
@@ -17,82 +17,180 @@
                 Start App
             </div>
         </div>
-
+        
+        <!-- The settings menu frame --> 
         <div id="SettingsFrame" class="frame">
-            <p>Set session timers (in minutes)</p><br>
-            <!-- Feel free to edit the settings form however you want, didn't really style it-->
-            <!-- Submitting the form reloads the page, so no submit button was added -->
-            <form id="SettingsForm" method="post" onsubmit="return false;">
-                <label for="WorkTime">Work</label><br>
-                <input type="number" id="WorkTime" name="WorkTime" min="1" value="25">
+            <p>Set session timers <wbr>(in minutes)</p><br>
+                <!-- Submitting the form reloads the page, so no submit button was added -->
+                <form id="SettingsForm" method="post" onsubmit="return false;">
+                    <label for="WorkTime">Work</label>
+                    <input type="number" id="WorkTime" name="WorkTime" min="1" value="25">
+                    
+                    <label for="BreakTime">Break</label>
+                    <input type="number" id="BreakTime" name="BreakTime" min="1" value="5">
+                    
+                    <label for="NumSessions">Sessions</label>
+                    <input type="number" id="NumSessions" name="NumSessions" min="1" value="4">
+                </form>
                 <br><br>
-                <label for="BreakTime">Break</label>
-                <input type="number" id="BreakTime" name="BreakTime" min="1" value="5">
-                <br><br>
-                <label for="NumSessions">Sessions</label>
-                <input type="number" id="NumSessions" name="NumSessions" min="1" value="4">
-            </form>
-            <br><br>
-            <button id="BeginButton" class="button button-start">
-                Begin Timer
-            </button>
-        </div>
-
-        <div id="TimerFrame" class="frame">
-            <p id="Timer" class="timer">Timer Frame</p>
-            <br>
-            <button id="StopButton" class="button button-stop">
-                Stop Timer
-            </button>
-        </div>
-    </main>
-  </body>
-  
-  <script>
-      // Callback function to start the app
-      StartButton.addEventListener('click', (e) => {
-          TransitionFrame("StartFrame", "SettingsFrame");
-      });
-      
-      // Callback function to start the timer
-      BeginButton.addEventListener('click', (e) => {
-          let workTime = document.getElementById("WorkTime").value;
-          let breakTime = document.getElementById("BreakTime").value;
-          let numSessions = document.getElementById("NumSessions").value;
-
-          // Validate form input
-          if (isNaN(workTime) || isNaN(breakTime) || isNaN(numSessions) || 
-              workTime < 1 || breakTime < 1 || numSessions < 1) {
-              alert("Please use only positive integers.");
-          }
-
-          else {
-            let prevFrame = document.getElementById("SettingsFrame");
-            prevFrame.style.display = "none";
+                <button id="BeginButton" class="button button-start">
+                    Begin Timer
+                </button>
+            </div>
             
+            <!-- The timer frame --> 
+            <div id="TimerFrame" class="frame">
+                <p id="Timer" class="timer">Timer Frame</p>
+                <br>
+                <menu id="TimerMenu">
+                    <button id="PausePlayButton" class="button button-stop">
+                        Pause Timer
+                    </button>
+                    <button id="ResetTimerButton" class="button">
+                        Reset Timer
+                    </button>
+                    <!-- Could be unnecessary and subject to removal -->
+                    <button id="BackToSettingsButton" class="button">
+                        Go back to settings
+                    </button>
+                </menu>
+            </div>
+            
+            <!-- The alarm frame --> 
+            <div id="AlarmFrame" class="frame">
+                <p id="Timer" class="timer">Alarm Frame</p>
+                <br>
+                <button id="StopAlarmButton" class="button button-stop">
+                    Stop Alarm
+                </button>
+            </div>
+        </main>
+    </body>
+    
+    <script>
+    // Variables
+    let bTimerPlaying = false;  // Track state of pause/play button
+    let ogWorkTime  = 0;
+    let workTime    = 0;
+    let breakTime   = 0;
+    let numSessions = 0;
+    var timerUpdateID;
+    
+    // Stop the callback 
+    function StopTimer() {
+        bTimerPlaying = false;
+        window.clearInterval(timerUpdateID);
+    }
+    
+    // Helper function to transition between states
+    function TransitionFrame(frame1, frame2)
+    {
+        let prevFrame = document.getElementById(frame1);
+        prevFrame.style.display = "none";
+        
+        let nextFrame = document.getElementById(frame2);
+        nextFrame.style.display = "block";
+    }
+    
+    // Toggle pause/play for the timer
+    function TogglePausePlay()
+    {
+        // Toggle the pause/play button
+        bTimerPlaying = !bTimerPlaying;
+        let btn = document.getElementById("PausePlayButton");
+        
+        if(bTimerPlaying) {
+            // Display pause button
+            btn.innerText = "Pause Timer";
+        }
+        else {
+            // Display play button
+            btn.innerText = "Play Timer";
+        }
+    }
+    
+    // Helper to update the display of the timer
+    function UpdateTimerDisplay() {
+        let seconds = `${workTime % 60}`;
+        document.getElementById("Timer").innerHTML = 
+            Math.floor(workTime/60) + ":" + seconds.padStart(2, '0');
+    }
+    
+    // Update the pomodoro timer
+    function UpdateTimer() {
+        if(bTimerPlaying) {
+            workTime  -= 1;
+            
+            // Stop the callback to this function and transition to the
+            // alarm frame
+            if(workTime <= 0) {
+                StopTimer();
+                TransitionFrame("TimerFrame", "AlarmFrame");
+            }
+        }
+        
+        // update the display
+        UpdateTimerDisplay();
+    }
+    
+    // Callback function to start the timer
+    BeginButton.addEventListener('click', (e) => {
+        workTime    = document.getElementById("WorkTime").value  * 60;
+        breakTime   = document.getElementById("BreakTime").value * 60;
+        numSessions = document.getElementById("NumSessions").value;
+        
+        // Copy the work time to another varible
+        ogWorkTime = workTime;
+        
+        // Validate form input
+        if (isNaN(workTime) || isNaN(breakTime) || isNaN(numSessions) || 
+        workTime < 1 || breakTime < 1 || numSessions < 1) {
+            alert("Please use only positive integers.");
+        }
+        else {
             // Dummy timer module, uses the input from earlier
-            let seconds = "00";
-            document.getElementById("Timer").innerHTML = workTime + ":" + seconds;
-
-            let nextFrame = document.getElementById("TimerFrame");
-            nextFrame.style.display = "block";
+            UpdateTimerDisplay();
             
-          }
-      });
-      
-      // Callback function to stop the timer
-      StopButton.addEventListener('click', (e) => {
-          TransitionFrame("TimerFrame", "StartFrame");
-      });
-      
-      // Helper function to transition between states
-      function TransitionFrame(frame1, frame2)
-      {
-          let prevFrame = document.getElementById(frame1);
-          prevFrame.style.display = "none";
-          
-          let nextFrame = document.getElementById(frame2);
-          nextFrame.style.display = "block";
-      }
-  </script>
+            // Transition the frame
+            TransitionFrame("SettingsFrame", "TimerFrame");
+            
+            // Signal to start the timer
+            bTimerPlaying = true;
+            
+            // Start the constant callback
+            timerUpdateID = window.setInterval(UpdateTimer, 1000);
+        }
+    });
+    
+    // Callback function return to settings menu from timer frame
+    BackToSettingsButton.addEventListener('click', (e) => {
+        StopTimer();
+        TransitionFrame("TimerFrame", "SettingsFrame");
+    });
+    
+    // Callback function to stop the timer
+    PausePlayButton.addEventListener('click', (e) => {
+        TogglePausePlay();
+    });
+    
+    // Callback function to reset the timer
+    ResetTimerButton.addEventListener('click', (e) => {
+        // Reset the timer
+        workTime = ogWorkTime;
+        
+        // Update the display immediately
+        UpdateTimerDisplay();
+    });
+    
+    // Callback function to start the app
+    StartButton.addEventListener('click', (e) => {
+        TransitionFrame("StartFrame", "SettingsFrame");
+    });
+    
+    // Callback function to stop the alarm
+    StopAlarmButton.addEventListener('click', (e) => {
+        TransitionFrame("AlarmFrame", "StartFrame");
+    });
+    
+    </script>
 </html>
