@@ -22,14 +22,14 @@
             <!-- Feel free to edit the settings form however you want, didn't really style it-->
             <!-- Submitting the form reloads the page, so no submit button was added -->
             <form id="SettingsForm" method="post" onsubmit="return false;">
-                <label for="workTime">Work:</label><br>
+                <label for="workTime">Work</label><br>
                 <input type="number" id="workTime" name="workTime" min="0" value="25">
                 <br><br>
-                <label for="shortTime">Short break:</label>
-                <input type="number" id="shortTime" name="shortTime" min="0" value="5">
+                <label for="breakTime">Break</label>
+                <input type="number" id="breakTime" name="breakTime" min="0" value="5">
                 <br><br>
-                <label for="longTime">Long break:</label>
-                <input type="number" id="longTime" name="longTime" min="0" value="15">
+                <label for="numSessions">Sessions</label>
+                <input type="number" id="numSessions" name="numSessions" min="0" value="4">
             </form>
             <br><br>
             <button id="BeginButton" class="button button-start">
@@ -58,10 +58,10 @@
       
       BeginButton.addEventListener('click', (e) => {
           let workTime = document.getElementById("workTime").value;
-          let shortTime = document.getElementById("shortTime").value;
-          let longTime = document.getElementById("longTime").value;
-          if (isNaN(workTime) || isNaN(shortTime) || isNaN(longTime) || 
-              workTime < 1 || shortTime < 1 || longTime < 1) {
+          let breakTime = document.getElementById("breakTime").value;
+          let numSessions = document.getElementById("numSessions").value;
+          if (isNaN(workTime) || isNaN(breakTime) || isNaN(numSessions) || 
+              workTime < 1 || breakTime < 1 || numSessions < 1) {
               alert("Please use only positive integers.");
           }
           else {
