@@ -3,49 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Index</title>
-    <style>
-        /* Zero out margins and padding for precise control */
-        * { margin: 0; padding: 0 }
-        
-        html {
-          min-height: 100%;
-        }
-        body {
-            display: flex;
-            -align-content: center;
-            justify-content: center; 
-        }
-        main {
-            margin-top: 25vh; 
-            width: 40vw; 
-            height: 50vh; 
-            
-            /* Set minimum and maximum sizes of the main content */
-            min-width: 360px;
-            max-width: 520px;
-            min-height: 480px;
-            max-height: 694px;
-            
-            background: pink;
-        }
-        
-        /* Class selectors */
-        .frame {
-            -visibility: collapse;
-            display: none; 
-            
-            align-content: stretch;
-            justify-content: center;
-        }
-        .frame > p {
-            margin-top: 30%;
-            text-align: center;
-        }
-        .frame > * {
-            margin-left: 30%;
-            width: 40%;
-        }
-    </style>
+    <!-- Moved the css to a different file for organizational purposes -->
+    <link rel="stylesheet" type="text/css" href="./index.css">
   </head>
   
   <body>
@@ -53,23 +12,36 @@
         <!-- The start menu frame --> 
         <div id="StartFrame" class="frame" style="display: block">
             <p>Hello Pomodoro</p>
-            <button id="StartButton">
+            <br>
+            <button id="StartButton" class="button button-start">
                 Start App
-            </button>
+            </div>
         </div>
-        
-        <!-- The placeholder for the settings menu frame -->
+
         <div id="SettingsFrame" class="frame">
-            <p>Settings Frame</p>
-            <button id="BeginButton">
+            <p>Set session timers (in minutes)</p><br>
+            <!-- Feel free to edit the settings form however you want, didn't really style it-->
+            <!-- Submitting the form reloads the page, so no submit button was added -->
+            <form id="SettingsForm" method="post" onsubmit="return false;">
+                <label for="WorkTime">Work</label><br>
+                <input type="number" id="WorkTime" name="WorkTime" min="1" value="25">
+                <br><br>
+                <label for="BreakTime">Break</label>
+                <input type="number" id="BreakTime" name="BreakTime" min="1" value="5">
+                <br><br>
+                <label for="NumSessions">Sessions</label>
+                <input type="number" id="NumSessions" name="NumSessions" min="1" value="4">
+            </form>
+            <br><br>
+            <button id="BeginButton" class="button button-start">
                 Begin Timer
             </button>
         </div>
-        
-        <!-- Another placeholder for the timer frame -->
+
         <div id="TimerFrame" class="frame">
-            <p>Timer Frame</p>
-            <button id="StopButton">
+            <p id="Timer" class="timer">Timer Frame</p>
+            <br>
+            <button id="StopButton" class="button button-stop">
                 Stop Timer
             </button>
         </div>
@@ -84,7 +56,28 @@
       
       // Callback function to start the timer
       BeginButton.addEventListener('click', (e) => {
-          TransitionFrame("SettingsFrame", "TimerFrame");
+          let workTime = document.getElementById("WorkTime").value;
+          let breakTime = document.getElementById("BreakTime").value;
+          let numSessions = document.getElementById("NumSessions").value;
+
+          // Validate form input
+          if (isNaN(workTime) || isNaN(breakTime) || isNaN(numSessions) || 
+              workTime < 1 || breakTime < 1 || numSessions < 1) {
+              alert("Please use only positive integers.");
+          }
+
+          else {
+            let prevFrame = document.getElementById("SettingsFrame");
+            prevFrame.style.display = "none";
+            
+            // Dummy timer module, uses the input from earlier
+            let seconds = "00";
+            document.getElementById("Timer").innerHTML = workTime + ":" + seconds;
+
+            let nextFrame = document.getElementById("TimerFrame");
+            nextFrame.style.display = "block";
+            
+          }
       });
       
       // Callback function to stop the timer
