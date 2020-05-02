@@ -154,6 +154,10 @@
             // Transition the frame
             TransitionFrame("SettingsFrame", "TimerFrame");
             
+            // Force the pause/play button to display pause
+            let btn = document.getElementById("PausePlayButton");
+            btn.innerText = "Pause Timer";
+            
             // Signal to start the timer
             bTimerPlaying = true;
             
