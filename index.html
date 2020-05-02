@@ -81,8 +81,11 @@
                 </button>
             </div>
         </div>
-        </main>
-    </body>
+    </main>
+    
+    <audio id="Jingle1" src="assets/audio/Jingle1.mp3" type="audio/mpeg"></audio>
+    <audio id="Jingle2" src="assets/audio/Jingle2.mp3" type="audio/mpeg"></audio>
+</body>
     
     <script>
     // Variables
@@ -97,6 +100,24 @@
     let numSessions = 0;
     var timerID     = undefined;;
     let workTime    = 0;
+    
+    const audioContext = new AudioContext();
+    
+    // TODO: Encapusule audio creation to its own function and execute onLoad
+    const jingleElem1 = document.getElementById("Jingle1");
+    const jingleElem2 = document.getElementById("Jingle2");
+    
+    const jingle1 = audioContext.createMediaElementSource(jingleElem1);
+    const jingle2 = audioContext.createMediaElementSource(jingleElem2);
+    
+    const gainJingle1 = audioContext.createGain();
+    const gainJingle2 = audioContext.createGain();
+    
+    jingle1.connect(gainJingle1).connect(audioContext.destination);
+    jingle2.connect(gainJingle2).connect(audioContext.destination);
+    
+    gainJingle1.gain.value = 0.075;
+    gainJingle2.gain.value = 0.075;
     
     // Start a timer 
     function StartTimer() {
@@ -161,6 +182,9 @@
     // Update the pomodoro timer
     function UpdateTimer() {
         if(bTimerPlaying) {
+            // XXX: Decrementing time
+            // Set this to a higher value (ex. 30) when debugging.
+            // Set this to 1 in final version.
             activeTime  -= 30;
             
             // Timer ran to completion
@@ -173,6 +197,8 @@
                 if(numSessions <= 0) {
                     // Move to the alarm frame
                     TransitionFrame("AlarmFrame");
+                    // Play the appropriate jingle
+                    jingleElem2.play();
                 }
                 else {
                     // Toggle between work session and break session
@@ -180,6 +206,8 @@
                     
                     // Move to the break frame
                     TransitionFrame("BreakFrame");
+                    // Play the appropriate jingle
+                    jingleElem1.play();
                 }
             }
         }
