@@ -11,19 +11,36 @@
     <main>
         <div id="StartFrame" class="frame" style="display: block">
             <p>Hello Pomodoro</p>
-            <button id="StartButton">
+            <br>
+            <button id="StartButton" class="button button-start">
                 Start App
-            </button>
+            </div>
         </div>
+
         <div id="SettingsFrame" class="frame">
-            <p>Settings Frame</p>
-            <button id="BeginButton">
+            <p>Set session timers (in minutes)</p><br>
+            <!-- Feel free to edit the settings form however you want, didn't really style it-->
+            <!-- Submitting the form reloads the page, so no submit button was added -->
+            <form id="SettingsForm" method="post" onsubmit="return false;">
+                <label for="workTime">Work:</label><br>
+                <input type="number" id="workTime" name="workTime" min="0" value="25">
+                <br><br>
+                <label for="shortTime">Short break:</label>
+                <input type="number" id="shortTime" name="shortTime" min="0" value="5">
+                <br><br>
+                <label for="longTime">Long break:</label>
+                <input type="number" id="longTime" name="longTime" min="0" value="15">
+            </form>
+            <br><br>
+            <button id="BeginButton" class="button button-start">
                 Begin Timer
             </button>
         </div>
+
         <div id="TimerFrame" class="frame">
             <p>Timer Frame</p>
-            <button id="StopButton">
+            <br>
+            <button id="StopButton" class="button button-stop">
                 Stop Timer
             </button>
         </div>
@@ -40,11 +57,20 @@
       });
       
       BeginButton.addEventListener('click', (e) => {
-          let prevFrame = document.getElementById("SettingsFrame");
-          prevFrame.style.display = "none";
-          
-          let nextFrame = document.getElementById("TimerFrame");
-          nextFrame.style.display = "block";
+          let workTime = document.getElementById("workTime").value;
+          let shortTime = document.getElementById("shortTime").value;
+          let longTime = document.getElementById("longTime").value;
+          if (isNaN(workTime) || isNaN(shortTime) || isNaN(longTime) || 
+              workTime < 1 || shortTime < 1 || longTime < 1) {
+              alert("Please use only positive integers.");
+          }
+          else {
+            let prevFrame = document.getElementById("SettingsFrame");
+            prevFrame.style.display = "none";
+            
+            let nextFrame = document.getElementById("TimerFrame");
+            nextFrame.style.display = "block";
+          }
       });
       
       StopButton.addEventListener('click', (e) => {

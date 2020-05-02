@@ -8,7 +8,7 @@
             justify-content: center;
         }
         main {
-            margin-top: 25%;
+            margin-top: 5%;
             width: 360px;
             height: 480px;
             
@@ -29,3 +29,20 @@
             margin-left: 30%;
             width: 40%;
         }
+
+        .button{
+            display: grid;
+            font-family:'Roboto',sans-serif;
+            border-width: 1.5px;
+            margin: auto;
+            padding: 5px 5px 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+            text-align: center;
+            border-color: black;
+        }
+        .button:active{ border-color: #BBBBBB; }
+        .button-start           { background-color: rgb(16, 175, 2); }
+        .button-stop            { background-color: rgb(195, 1, 1); 
+                                  color: white; 
+                                }
