@@ -1,3 +1,16 @@
+/* Remove arrows/spinners from input number type */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 * { margin: 0; padding: 0 }
 html {
     min-height: 100%;
@@ -46,12 +59,16 @@ main {
     background-color: rgb(195, 1, 1); 
     color: white; 
 }
+.checkmarkContainer {
+    text-align:center;
+}
 .contentWrapper > * {
     margin-left: 30%;
     width: 40%;
 }
 .contentWrapper > p {
     text-align: center;
+    font-weight: bold;
 }
 .contentWrapper {
     margin-top: 20%;
@@ -64,22 +81,12 @@ main {
     width: 100%;
     visibility: collapse;
 }
-.form-grid-1 {
-    grid-row-start: 1;
-    grid-row-end: 4;
-}
 .playback-button {
     width:  48px;
     height: 48px;
 }
-.settings-grid {
-    display: inline-grid;
-    grid-template-columns: auto auto;  
-    padding: 0 25px 0 25px;
-    row-gap: 27px;
-}
-.settings-grid > input {
-    grid-column-start: 2;
+.settings-checkmark {
+    white-space: nowrap;
 }
 .timer {
     font-family:'Roboto', sans-serif;
@@ -92,6 +99,7 @@ main {
 #BeginButton {
     bottom: 16px;
 }
+/*
 #EnableAudioButton {
     font-size: 8px;
     margin: 0 20px 0 7px;
@@ -104,7 +112,13 @@ main {
     white-space: nowrap;
     padding: 5px;
 }
+*/
 #SettingsForm > label {
+    font-weight: lighter;
+    text-align: center;
+    margin-left: 20px;
+}
+#SettingsForm> input {
     text-align: center;
 }
 #TimerMenu > button {

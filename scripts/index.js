@@ -113,6 +113,9 @@ function UpdateTimer() {
                 TransitionFrame("AlarmFrame");
                 // Play the appropriate jingle
                 if (enableAudio) jingleElem2.play();
+                if (Notification.permission == 'granted' && enableVisual) {
+                    var notification = new Notification(notifTitle, { body: "You have completed all of your sessions." });
+                }
             }
             else {
                 // Toggle between work session and break session
@@ -123,7 +126,7 @@ function UpdateTimer() {
                 // Play the appropriate jingle
                 if (enableAudio) jingleElem1.play();
                 // Display desktop notification
-                if (Notification.permission == 'granted') {
+                if (Notification.permission == 'granted' && enableVisual) {
                     let notifBody = bWorkSession ? "break" : "work";
                     var notification = new Notification(notifTitle, { body: "Your " + notifBody + " session has finished." });
                 }
@@ -184,11 +187,11 @@ function askPermission() {
     }
 }
 
-// Changes color and text of visual notification setting button
-function changeNotifButton() {
-    let notifButton = document.getElementById("EnableNotifButton");
-    notifButton.innerHTML = "Notifications enabled";
-    notifButton.style.backgroundColor = "rgb(16, 175, 2)"; 
+function resetForm() {
+    document.getElementById("SettingsForm").reset(); 
+
+    enableVisual = false;
+    enableAudio = false;
 }
 
 // Callback function return to settings menu from timer frame
@@ -246,9 +249,6 @@ ResetTimerButton.addEventListener('click', (e) => {
 // Callback function to start the app
 StartButton.addEventListener('click', (e) => {
     TransitionFrame("SettingsFrame");
-    if (Notification.permission == 'granted') {
-        changeNotifButton();
-    }
 });
 
 // Callback function to stop the break alarm
@@ -266,20 +266,11 @@ StopAlarmButton.addEventListener('click', (e) => {
 EnableNotifButton.addEventListener('click', (e) => {
     if (Notification.permission != 'granted') {
         askPermission();
-        if (Notification.permission == 'granted') {
-            changeNotifButton();
-        }
     }
+    enableVisual = !(enableVisual);
 });
 
 EnableAudioButton.addEventListener('click', (e) => {
-    console.log("test");
     enableAudio = !(enableAudio);
     let audioButton = document.getElementById("EnableAudioButton");
-    if (enableAudio) {
-        audioButton.innerHTML = "Disable Audio";
-    }
-    else {
-        audioButton.innerHTML = "Enable Audio";
-    }
 });
