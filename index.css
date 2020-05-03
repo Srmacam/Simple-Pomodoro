@@ -29,7 +29,8 @@ form > * {
 }
 main {
     background: #e76f51;
-    border: 2px solid rgb(255, 0, 0);
+    -border: 2px solid rgb(255, 0, 0);
+    border: none;
     border-radius: 50px;
     height: 480px;
     margin-top: 5%;
@@ -37,7 +38,8 @@ main {
     width: 360px;
 }
 .button {
-    border-color: rgb(0, 0, 0);
+    -border-color: rgb(0, 0, 0);
+    border: none;
     border-radius: 6px;
     display: grid;
     font-family:'Roboto', sans-serif;
@@ -49,18 +51,24 @@ main {
     text-transform: uppercase;
     text-align: center;
 }
+.button:hover {
+    background-color: #d5d5d5;
+}
 .button:active { 
-    border-color: #BBBBBB; 
+    -border-color: #BBBBBB; 
 }
 .button-start  { 
     background-color: rgb(16, 175, 2); 
+}
+.button-start:hover  { 
+    background-color: rgb(8, 144, 0); 
 }
 .button-stop { 
     background-color: rgb(195, 1, 1); 
     color: white; 
 }
-.checkmarkContainer {
-    text-align:center;
+.button-stop:hover { 
+    background-color: rgb(152, 1, 1);
 }
 .contentWrapper > * {
     margin-left: 30%;
@@ -80,6 +88,22 @@ main {
     position: absolute;
     width: 100%;
     visibility: collapse;
+}
+.form-grid-1 {
+    grid-row-start: 1;
+    grid-row-end: 4;
+}
+.pause-button {
+    background-color: #e9c46a;
+}
+.pause-button:hover {
+    background-color: #F79D65;
+}
+.play-button {
+    background-color: #00A896;
+}
+.play-button:hover {
+    background-color: #00755D;
 }
 .playback-button {
     width:  48px;

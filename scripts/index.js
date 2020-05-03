@@ -82,13 +82,15 @@ function UpdatePausePlayButton() {
     
     if(bTimerPlaying) {
         // Display pause button
-        btn.innerHTML = "<img class=\"playback-button\" src=\"assets/icons/pause_icon.png\">"
-        btn.style.backgroundColor = "#e9c46a";
+        btn.innerHTML = "<img class=\"playback-button\" src=\"assets/icons/pause_icon.png\">";
+        btn.classList.remove("play-button");
+        btn.classList.add("pause-button");
     }
     else {
         // Display play button
-        btn.innerHTML = "<img class=\"playback-button\" src=\"assets/icons/play_icon.png\">"
-        btn.style.backgroundColor = "#00a896";
+        btn.innerHTML = "<img class=\"playback-button\" src=\"assets/icons/play_icon.png\">";
+        btn.classList.remove("pause-button");
+        btn.classList.add("play-button");
     }
 }
 
