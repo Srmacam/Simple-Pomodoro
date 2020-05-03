@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8">
     <title>Index</title>
-    <!-- Moved the css to a different file for organizational purposes -->
     <link rel="stylesheet" type="text/css" href="./index.css">
 </head>
 
@@ -23,7 +22,7 @@
         <div id="SettingsFrame" class="frame">
             <div class="contentWrapper">
                 <p>Set session timers <wbr>(in minutes)</p><br>
-            </div>
+                </div>
                 <div class="settings-grid">
                     <!-- Submitting the form reloads the page, so no submit button was added -->
                     <form id="SettingsForm" class="form-grid-1">
@@ -44,7 +43,7 @@
                 </button>
             </div>
         </div>
-            
+        
         <!-- The timer frame --> 
         <div id="TimerFrame" class="frame">
             <div class="contentWrapper">
@@ -52,10 +51,10 @@
                 <p id="TimeClock" class="timer">Timer Frame</p>
                 <menu id="TimerMenu">
                     <button id="PausePlayButton" class="button button-stop">
-                        Pause Timer
+                        <img class="playback-button" src="assets/icons/pause_icon.png">
                     </button>
                     <button id="ResetTimerButton" class="button">
-                        Reset Timer
+                        <img class="playback-button" src="assets/icons/refresh_icon.png">
                     </button>
                     <!-- Could be unnecessary and subject to removal -->
                     <button id="BackToSettingsButton" class="button">
@@ -64,7 +63,7 @@
                 </menu>
             </div>
         </div>
-            
+        
         <!-- The break frame --> 
         <div id="BreakFrame" class="frame">
             <div class="contentWrapper">
@@ -90,7 +89,7 @@
     <audio id="Jingle1" src="./assets/audio/Jingle1.mp3" type="audio/mpeg"></audio>
     <audio id="Jingle2" src="./assets/audio/Jingle2.mp3" type="audio/mpeg"></audio>
 </body>
-    
-    <script src="./scripts/index.js"></script>
+
+<script src="./scripts/index.js"></script>
 
 </html>

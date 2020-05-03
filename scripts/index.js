@@ -49,8 +49,10 @@ function StartTimer() {
     // Set the timed callback
     timerID = window.setInterval(UpdateTimer, 1000);
     
+    // Update UI elements
     UpdateTimerDisplay();
     UpdateTimerStyle();
+    UpdatePausePlayButton();
 }
 
 // Stop the current timer 
@@ -75,19 +77,18 @@ function TransitionFrame(frame)
 }
 
 // Toggle pause/play for the timer
-function TogglePausePlay()
-{
-    // Toggle the pause/play button
-    bTimerPlaying = !bTimerPlaying;
+function UpdatePausePlayButton() {
     let btn = document.getElementById("PausePlayButton");
     
     if(bTimerPlaying) {
         // Display pause button
-        btn.innerText = "Pause Timer";
+        btn.innerHTML = "<img class=\"playback-button\" src=\"assets/icons/pause_icon.png\">"
+        btn.style.backgroundColor = "#e9c46a";
     }
     else {
         // Display play button
-        btn.innerText = "Play Timer";
+        btn.innerHTML = "<img class=\"playback-button\" src=\"assets/icons/play_icon.png\">"
+        btn.style.backgroundColor = "#00a896";
     }
 }
 
@@ -146,11 +147,11 @@ function UpdateTimerStyle() {
     let timerLabelElem = document.getElementById("TimeLabel");
     
     if(bWorkSession) {
-        mainElem.style.background = "rgb(200,100,100)";
+        mainElem.style.background = "#e76f51";
         timerLabelElem.innerText = "Work";
     }
     else {
-        mainElem.style.background = "rgb(100,200,100)";
+        mainElem.style.background = "#eae2b7";
         timerLabelElem.innerText = "Break";
     }
 }
@@ -215,10 +216,6 @@ BeginButton.addEventListener('click', (e) => {
         // Transition the frame
         TransitionFrame("TimerFrame");
         
-        // Force the pause/play button to display pause
-        let btn = document.getElementById("PausePlayButton");
-        btn.innerText = "Pause Timer";
-        
         // Signal to start the timer
         StartTimer();
     }
@@ -226,7 +223,10 @@ BeginButton.addEventListener('click', (e) => {
 
 // Callback function to stop the timer
 PausePlayButton.addEventListener('click', (e) => {
-    TogglePausePlay();
+    // Toggle the pause/play button
+    bTimerPlaying = !bTimerPlaying;
+    
+    UpdatePausePlayButton();
 });
 
 // Callback function to reset the timer

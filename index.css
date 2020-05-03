@@ -15,7 +15,7 @@ form > * {
     margin: 8px;
 }
 main {
-    background: pink;
+    background: #e76f51;
     border: 2px solid rgb(255, 0, 0);
     border-radius: 50px;
     height: 480px;
@@ -68,6 +68,10 @@ main {
     grid-row-start: 1;
     grid-row-end: 4;
 }
+.playback-button {
+    width:  48px;
+    height: 48px;
+}
 .settings-grid {
     display: inline-grid;
     grid-template-columns: auto auto;  
@@ -81,6 +85,9 @@ main {
     font-family:'Roboto', sans-serif;
     font-size: 40px;
     font-weight: bold;
+}
+#BackToSettingsButton {
+    bottom: 16px;
 }
 #BeginButton {
     bottom: 16px;
@@ -103,4 +110,5 @@ main {
 #TimerMenu > button {
     -margin-bottom: 20px;
     -padding: 10px;
+    height: 100%;
 }
