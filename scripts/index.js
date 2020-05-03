@@ -14,7 +14,6 @@ let enableVisual = false;
 let enableAudio = false;
 
 const audioContext = new AudioContext();
-const notifButton = document.getElementById("EnableNotifButton");
 
 // TODO: Encapusule audio creation to its own function and execute onLoad
 const jingleElem1 = document.getElementById("Jingle1");
@@ -184,6 +183,13 @@ function askPermission() {
     }
 }
 
+// Changes color and text of visual notification setting button
+function changeNotifButton() {
+    let notifButton = document.getElementById("EnableNotifButton");
+    notifButton.innerHTML = "Notifications enabled";
+    notifButton.style.backgroundColor = "rgb(16, 175, 2)"; 
+}
+
 // Callback function return to settings menu from timer frame
 BackToSettingsButton.addEventListener('click', (e) => {
     StopTimer();
@@ -240,8 +246,9 @@ ResetTimerButton.addEventListener('click', (e) => {
 // Callback function to start the app
 StartButton.addEventListener('click', (e) => {
     TransitionFrame("SettingsFrame");
-    if (Notification.permission == 'granted') 
-        notifButton.innerHTML = "Notifications enabled";
+    if (Notification.permission == 'granted') {
+        changeNotifButton();
+    }
 });
 
 // Callback function to stop the break alarm
@@ -256,26 +263,23 @@ StopAlarmButton.addEventListener('click', (e) => {
 });
 
 // Callback function to enable push notifications
-
-// Callback function to enable audio notifications
-StopAlarmButton.addEventListener('click', (e) => {
-    TransitionFrame("StartFrame");
-});
-
-// TODO actually create the notification
 EnableNotifButton.addEventListener('click', (e) => {
     if (Notification.permission != 'granted') {
         askPermission();
-        if (Notification.permission == 'granted')
-        document.getElementById("EnableNotifButton").innerHTML = "Notifications Enabled";
+        if (Notification.permission == 'granted') {
+            changeNotifButton();
+        }
     }
 });
-
 
 EnableAudioButton.addEventListener('click', (e) => {
     console.log("test");
     enableAudio = !(enableAudio);
-    let audioElement = document.getElementById("EnableAudioButton");
-    if (enableAudio)    audioElement.innerHTML = "Disable Audio";
-    else                audioElement.innerHTML = "Enable Audio";
+    let audioButton = document.getElementById("EnableAudioButton");
+    if (enableAudio) {
+        audioButton.innerHTML = "Disable Audio";
+    }
+    else {
+        audioButton.innerHTML = "Enable Audio";
+    }
 });
