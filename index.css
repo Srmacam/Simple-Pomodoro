@@ -46,14 +46,6 @@ main {
     background-color: rgb(195, 1, 1); 
     color: white; 
 }
-.frame {
-    align-content: stretch;
-    justify-content: center;
-    height: 100%;
-    position: absolute;
-    width: 100%;
-    visibility: collapse;
-}
 .contentWrapper > * {
     margin-left: 30%;
     width: 40%;
@@ -63,6 +55,27 @@ main {
 }
 .contentWrapper {
     margin-top: 20%;
+}
+.frame {
+    align-content: stretch;
+    justify-content: center;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    visibility: collapse;
+}
+.form-grid-1 {
+    grid-row-start: 1;
+    grid-row-end: 4;
+}
+.settings-grid {
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+    grid-gap: 5px;
+}
+.settings-grid > input {
+    grid-column-start: 2;
 }
 .timer {
     font-family:'Roboto', sans-serif;
@@ -78,4 +91,16 @@ main {
 #TimerMenu > button {
     -margin-bottom: 20px;
     -padding: 10px;
+}
+#VisualLabelC {
+    font-size: 13px;
+    margin-top: 9px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+}
+#AudioLabelC {
+    font-size: 13px;
+    margin-top: 4px;
+    margin-left: 10px;
+    margin-bottom: 5px;
 }
