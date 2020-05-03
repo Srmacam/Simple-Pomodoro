@@ -10,8 +10,11 @@ let ogWorkTime  = 0;
 let numSessions = 0;
 var timerID     = undefined;;
 let workTime    = 0;
+let enableVisual = false;
+let enableAudio = false;
 
 const audioContext = new AudioContext();
+const notifButton = document.getElementById("EnableNotifButton");
 
 // TODO: Encapusule audio creation to its own function and execute onLoad
 const jingleElem1 = document.getElementById("Jingle1");
@@ -96,6 +99,7 @@ function UpdateTimer() {
         // Set this to a higher value (ex. 30) when debugging.
         // Set this to 1 in final version.
         activeTime  -= 30;
+        let notifTitle = "Pomodoro Timer"
         
         // Timer ran to completion
         if(activeTime <= 0) {
@@ -108,7 +112,7 @@ function UpdateTimer() {
                 // Move to the alarm frame
                 TransitionFrame("AlarmFrame");
                 // Play the appropriate jingle
-                jingleElem2.play();
+                if (enableAudio) jingleElem2.play();
             }
             else {
                 // Toggle between work session and break session
@@ -117,7 +121,12 @@ function UpdateTimer() {
                 // Move to the break frame
                 TransitionFrame("BreakFrame");
                 // Play the appropriate jingle
-                jingleElem1.play();
+                if (enableAudio) jingleElem1.play();
+                // Display desktop notification
+                if (Notification.permission == 'granted') {
+                    let notifBody = bWorkSession ? "break" : "work";
+                    var notification = new Notification(notifTitle, { body: "Your " + notifBody + " session has finished." });
+                }
             }
         }
     }
@@ -147,32 +156,33 @@ function UpdateTimerStyle() {
     }
 }
 
-/* TODO
-function handlePermission(permission) {
-    if(!('permission' in Notification)) {
-      Notification.permission = permission;
+function checkPromiseSupport() {
+    try {
+      Notification.requestPermission().then();
+      return true;
+    } catch(e) { 
+        return false; 
+    }
 }
 
-function askNotifPermission() {
-    handlePermission(permission);
+function askPermission() {
     if (!('Notification' in window)) {
-        console.log("Notifications are not supported.");
-    } 
+        console.log("Notifications are not supported for this browser.");
+    }
     else {
-        if (checkNotificationPromise()) {
+        if (checkPromiseSupport()) {
             Notification.requestPermission()
             .then((permission) => {
-                handlePermission(permission);
+                Notification.permission = permission;
             })
         }
         else {
             Notification.requestPermission(function(permission) {
-                handlePermission(permission);
+                Notification.permission = permission;
             });
         }
     }
 }
-*/
 
 // Callback function return to settings menu from timer frame
 BackToSettingsButton.addEventListener('click', (e) => {
@@ -186,7 +196,7 @@ BeginButton.addEventListener('click', (e) => {
     breakTime   = document.getElementById("BreakTime").value * 60;
     numSessions = document.getElementById("NumSessions").value;
     
-    // Copy the work & break times to another varible
+    // Copy the work & break times to another variable
     ogWorkTime  = workTime;
     ogBreakTime = breakTime;
     
@@ -230,6 +240,8 @@ ResetTimerButton.addEventListener('click', (e) => {
 // Callback function to start the app
 StartButton.addEventListener('click', (e) => {
     TransitionFrame("SettingsFrame");
+    if (Notification.permission == 'granted') 
+        notifButton.innerHTML = "Notifications enabled";
 });
 
 // Callback function to stop the break alarm
@@ -241,4 +253,29 @@ StopBreakAlarmButton.addEventListener('click', (e) => {
 // Callback function to stop the alarm
 StopAlarmButton.addEventListener('click', (e) => {
     TransitionFrame("StartFrame");
+});
+
+// Callback function to enable push notifications
+
+// Callback function to enable audio notifications
+StopAlarmButton.addEventListener('click', (e) => {
+    TransitionFrame("StartFrame");
+});
+
+// TODO actually create the notification
+EnableNotifButton.addEventListener('click', (e) => {
+    if (Notification.permission != 'granted') {
+        askPermission();
+        if (Notification.permission == 'granted')
+        document.getElementById("EnableNotifButton").innerHTML = "Notifications Enabled";
+    }
+});
+
+
+EnableAudioButton.addEventListener('click', (e) => {
+    console.log("test");
+    enableAudio = !(enableAudio);
+    let audioElement = document.getElementById("EnableAudioButton");
+    if (enableAudio)    audioElement.innerHTML = "Disable Audio";
+    else                audioElement.innerHTML = "Enable Audio";
 });

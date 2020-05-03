@@ -70,9 +70,9 @@ main {
 }
 .settings-grid {
     display: inline-grid;
-    grid-template-columns: auto auto auto;
-    padding: 10px;
-    grid-gap: 5px;
+    grid-template-columns: auto auto;  
+    padding: 0 25px 0 25px;
+    row-gap: 27px;
 }
 .settings-grid > input {
     grid-column-start: 2;
@@ -85,22 +85,22 @@ main {
 #BeginButton {
     bottom: 16px;
 }
+#EnableAudioButton {
+    font-size: 8px;
+    margin: 0 20px 0 7px;
+    white-space: nowrap;
+    padding: 5px;
+}
+#EnableNotifButton {
+    font-size: 8px;
+    margin: 23px 20px 0 7px;
+    white-space: nowrap;
+    padding: 5px;
+}
 #SettingsForm > label {
     text-align: center;
 }
 #TimerMenu > button {
     -margin-bottom: 20px;
     -padding: 10px;
-}
-#VisualLabelC {
-    font-size: 13px;
-    margin-top: 9px;
-    margin-left: 10px;
-    margin-bottom: 5px;
-}
-#AudioLabelC {
-    font-size: 13px;
-    margin-top: 4px;
-    margin-left: 10px;
-    margin-bottom: 5px;
 }
