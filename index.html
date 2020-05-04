@@ -21,7 +21,7 @@
         <!-- The settings menu frame --> 
         <div id="SettingsFrame" class="frame">
             <div class="contentWrapper">
-                <p>Set session timers</p><br>
+                <p>Set Session Timers</p><br>
                 <div>
                     <!-- Submitting the form reloads the page, so no submit button was added -->
                     <form id="SettingsForm" onsubmit="return false;">
@@ -35,15 +35,18 @@
                         <input type="number" id="NumSessions" name="NumSessions" value="4" min="1" max="10">
                     </form>
                     <br>
-                    <div style="white-space: nowrap;">
-                        <input type="checkbox" id="EnableNotifButton" name="EnableNotifButton" autocomplete="off">
-                        <label for="EnableNotifButton" style="white-space: nowrap;">Enable Notifications</label>
-                    </div>
+                    <p class="settings-header"> Options </p>
+                    <label class="checkmark-container">
+                        <input type="checkbox" id="EnableNotifButton" autocomplete="off">
+                        <span class="checkmark-custom"></span>
+                        Enable Notifications
+                    </label>
                     <br>
-                    <div style="white-space: nowrap;">
-                        <input type="checkbox" id="EnableAudioButton" name="EnableAudioButton" autocomplete="off">
-                        <label for="EnableAudioButton" style="white-space: nowrap;">Enable Audio</label>
-                    </div>
+                    <label class="checkmark-container">
+                        <input type="checkbox" id="EnableAudioButton" autocomplete="off">
+                        <span class="checkmark-custom"></span>
+                        Enable Audio
+                    </label>
                 </div>
                 <button id="BeginButton" class="button button-start">
                     Begin Timer
@@ -57,7 +60,7 @@
                 <p id="TimeLabel"> Work </p>
                 <p id="TimeClock" class="timer">Timer Frame</p>
                 <menu id="TimerMenu">
-                    <button id="PausePlayButton" class="button pause-button">
+                    <button id="PausePlayButton" class="button button-stop">
                         <img class="playback-button" src="assets/icons/pause_icon.png">
                     </button>
                     <button id="ResetTimerButton" class="button">
