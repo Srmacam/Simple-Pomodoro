@@ -226,6 +226,19 @@ BeginButton.addEventListener('click', (e) => {
     }
 });
 
+// Callback function to enable push notifications
+EnableNotifButton.addEventListener('click', (e) => {
+    if (Notification.permission != 'granted') {
+        askPermission();
+    }
+    enableVisual = !(enableVisual);
+});
+
+EnableAudioButton.addEventListener('click', (e) => {
+    enableAudio = !(enableAudio);
+    let audioButton = document.getElementById("EnableAudioButton");
+});
+
 // Callback function to stop the timer
 PausePlayButton.addEventListener('click', (e) => {
     // Toggle the pause/play button
@@ -262,17 +275,4 @@ StopBreakAlarmButton.addEventListener('click', (e) => {
 // Callback function to stop the alarm
 StopAlarmButton.addEventListener('click', (e) => {
     TransitionFrame("StartFrame");
-});
-
-// Callback function to enable push notifications
-EnableNotifButton.addEventListener('click', (e) => {
-    if (Notification.permission != 'granted') {
-        askPermission();
-    }
-    enableVisual = !(enableVisual);
-});
-
-EnableAudioButton.addEventListener('click', (e) => {
-    enableAudio = !(enableAudio);
-    let audioButton = document.getElementById("EnableAudioButton");
 });

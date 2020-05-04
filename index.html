@@ -2,7 +2,7 @@
 <html lang="en-US">
 <head>
     <meta charset="utf-8">
-    <title>Index</title>
+    <title>Simple Pomodoro</title>
     <link rel="stylesheet" type="text/css" href="./index.css">
 </head>
 
@@ -11,8 +11,7 @@
         <!-- The start menu frame --> 
         <div id="StartFrame" class="frame" style="visibility: visible">
             <div class="contentWrapper">
-                <p>Hello Pomodoro</p>
-                <br>
+                <h1>Hello Pomodoro</h1>
                 <button id="StartButton" class="button button-start">
                     Start App
                 </button>
@@ -21,46 +20,42 @@
         <!-- The settings menu frame --> 
         <div id="SettingsFrame" class="frame">
             <div class="contentWrapper">
-                <p>Set Session Timers</p><br>
-                <div>
+                <h1>Set Session Timers</h1>
                     <!-- Submitting the form reloads the page, so no submit button was added -->
                     <form id="SettingsForm" onsubmit="return false;">
-                        <label for="WorkTime">Work (minutes)</label>
+                        <label for="WorkTime" class="form-label">Work (minutes)</label>
                         <input type="number" id="WorkTime" name="WorkTime" value="25" min="1" max="60">
                         
-                        <label for="BreakTime">Break (minutes)</label>
+                        <label for="BreakTime" class="form-label">Break (minutes)</label>
                         <input type="number" id="BreakTime" name="BreakTime" value="5" min="1" max="30">
                         
-                        <label for="NumSessions">Sessions</label>
+                        <label for="NumSessions" class="form-label">Sessions</label>
                         <input type="number" id="NumSessions" name="NumSessions" value="4" min="1" max="10">
+                    
+                        <h2 class="settings-header"> Options </h2>
+                        
+                        <div class="checkmark-container">
+                            <input type="checkbox" class="custom-checkbox" id="EnableNotifButton" autocomplete="off">
+                            <label> Enable Notifications </label>
+                        </div>
+                        <div class="checkmark-container">
+                            <input type="checkbox" class="custom-checkbox" id="EnableAudioButton" autocomplete="off">
+                            <label> Enable Audio </label>
+                        </div>
                     </form>
-                    <br>
-                    <p class="settings-header"> Options </p>
-                    <label class="checkmark-container">
-                        <input type="checkbox" id="EnableNotifButton" autocomplete="off">
-                        <span class="checkmark-custom"></span>
-                        Enable Notifications
-                    </label>
-                    <br>
-                    <label class="checkmark-container">
-                        <input type="checkbox" id="EnableAudioButton" autocomplete="off">
-                        <span class="checkmark-custom"></span>
-                        Enable Audio
-                    </label>
                 </div>
                 <button id="BeginButton" class="button button-start">
                     Begin Timer
                 </button>
-            </div>
         </div>
         
         <!-- The timer frame --> 
         <div id="TimerFrame" class="frame">
             <div class="contentWrapper">
-                <p id="TimeLabel"> Work </p>
+                <h1 id="TimeLabel" class="timer"> Work </h1>
                 <p id="TimeClock" class="timer">Timer Frame</p>
                 <menu id="TimerMenu">
-                    <button id="PausePlayButton" class="button button-stop">
+                    <button id="PausePlayButton" class="button">
                         <img class="playback-button" src="assets/icons/pause_icon.png">
                     </button>
                     <button id="ResetTimerButton" class="button">
@@ -77,7 +72,7 @@
         <!-- The break frame --> 
         <div id="BreakFrame" class="frame">
             <div class="contentWrapper">
-                <p> Break Time </p>
+                <h1> Break Time </h1>
                 <button id="StopBreakAlarmButton" class="button button-stop">
                     OK
                 </button>
@@ -87,7 +82,7 @@
         <!-- The alarm frame --> 
         <div id="AlarmFrame" class="frame">
             <div class="contentWrapper">
-                <p> Congratulations! </p>
+                <h1> Congratulations! </h1>
                 <p> You finished your work session! </p>
                 <button id="StopAlarmButton" class="button button-stop">
                     Stop Alarm
