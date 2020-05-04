@@ -204,8 +204,9 @@ BackToSettingsButton.addEventListener('click', (e) => {
 
 // Callback function to start the timer
 BeginButton.addEventListener('click', (e) => {
-    workTime    = document.getElementById("WorkTime").value  * 60;
-    breakTime   = document.getElementById("BreakTime").value * 60;
+    const secs = 60;
+    workTime    = document.getElementById("WorkTime").value  * secs;
+    breakTime   = document.getElementById("BreakTime").value * secs;
     numSessions = document.getElementById("NumSessions").value;
     
     // Copy the work & break times to another variable
@@ -218,11 +219,19 @@ BeginButton.addEventListener('click', (e) => {
         alert("Please use only positive integers.");
     }
     else {
-        // Transition the frame
-        TransitionFrame("TimerFrame");
-        
-        // Signal to start the timer
-        StartTimer();
+        if (workTime > 60*secs || breakTime > 60*secs) {
+            alert("Each session may only last between 1 and 60 minutes.");
+        }
+        else if (numSessions > 10) {
+            alert("You may only have a maximum of 10 sessions.")
+        }
+        else {
+            // Transition the frame
+            TransitionFrame("TimerFrame");
+            
+            // Signal to start the timer
+            StartTimer();
+        }
     }
 });
 
