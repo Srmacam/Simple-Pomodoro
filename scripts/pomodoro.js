@@ -100,7 +100,7 @@ function UpdateTimer() {
         // XXX: Decrementing time
         // Set this to a higher value (ex. 30) when debugging.
         // Set this to 1 in final version.
-        activeTime  -= 30;
+        activeTime  -= 1;
         let notifTitle = "Pomodoro Timer"
         
         // Timer ran to completion
